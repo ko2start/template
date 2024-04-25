@@ -64,5 +64,5 @@ jobs:
           RELEASE_TAG: ${{ steps.tag.outputs.release_tag }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: "$RELEASE_TAG"
+          tag_name: $RELEASE_TAG
           body: ${{ steps.git-cliff.outputs.content }}
