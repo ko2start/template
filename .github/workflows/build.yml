@@ -57,14 +57,14 @@ jobs:
       - name: Generate release tag
         id: tag
         run: |
-          echo "release_tag=UserBuild_$(date +"%Y.%m.%d_%H%M")" >> $env:GITHUB_OUTPUT
+          echo "name=release_tag::UserBuild_$(date +"%Y.%m.%d_%H%M")" >> $GITHUB_OUTPUT
           printf '%s\n' "$release_tag"
       - name: Release user firmware
         uses: softprops/action-gh-release@v2
         # if: startsWith(github.ref, 'refs/tags/')
         env:
-          RELEASE_TAG: ${{ steps.tag.outputs.release_tag }}
+          RELEASE_TAG: ${{ steps.tag.outputs.name }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $env:RELEASE_TAG
+          tag_name: $RELEASE_TAG
           body: ${{ steps.git-cliff.outputs.content }}
