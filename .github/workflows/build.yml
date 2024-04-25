@@ -62,7 +62,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         # if: startsWith(github.ref, 'refs/tags/')
         env:
-          # RELEASE_TAG: ${{ steps.tag.outputs.release_tag }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
