@@ -30,7 +30,7 @@ repos:
         entry: bash -c 'cargo deny check -d'
         language: rust
         files: \.rs$
-        args: []
+        args: ["--all-features", "check"]
       - id: typos
         name: typos
         description: check typo
