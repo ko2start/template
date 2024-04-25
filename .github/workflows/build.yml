@@ -9,6 +9,10 @@ on:
   pull_request:
     branches:
       - main
+env:
+  build_directory: ${{github.workspace}}/BUILD
+  build_type: Release
+  release_name: build_${{github.run_number}}
 
 permissions:
   contents: write
@@ -50,10 +54,15 @@ jobs:
         env:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }} #++
-      - name: Release
+      - name: Generate release tag
+        id: tag
+        run: |
+          echo "::set-output name=release_tag::UserBuild_$(date +"%Y.%m.%d_%H%M")"
+      - name: Release user firmware
         uses: softprops/action-gh-release@v2
         # if: startsWith(github.ref, 'refs/tags/')
-        with:
-          body: ${{ steps.git-cliff.outputs.content }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }} ${{ env.release_name }}
+          body: ${{ steps.git-cliff.outputs.content }}
