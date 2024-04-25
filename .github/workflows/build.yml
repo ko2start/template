@@ -55,6 +55,6 @@ jobs:
           OUTPUT: CHANGELOG.md
           GITHUB_REPO: ${{ github.repository }} #++
       - name: 'Create Release'
-        run: hub release create release_name -m release_message -a template.zip
+        run: hub release create release_name -m release_message -a ko2start/template.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
